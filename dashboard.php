@@ -10,8 +10,12 @@ if (!isset($_SESSION['username'])) {
 // Contoh data barang
 $kode_barang = ['K001', 'K002', 'K003', 'K004', 'K005'];
 $nama_barang = ['Teh Pucuk', 'Sukro', 'Sprite', 'Coca Cola', 'Chitose'];
-$harga_barang = [3000, 2500, 5000, 6000, 4000];
+$harga_barang = [5000, 3500, 4000, 5500, 4000];
 
+$jumlah = count($nama_barang) - 1;
+$beli = 0;
+$total = 0;
+$grandtotal = 0; // ← harus pakai titik koma di akhir baris
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +60,7 @@ $harga_barang = [3000, 2500, 5000, 6000, 4000];
         }
         a:hover {
             background-color: #003f7f;
+            color: white;
         }
         table {
             width: 100%;
@@ -74,6 +79,10 @@ $harga_barang = [3000, 2500, 5000, 6000, 4000];
             background-color: #f4f4f4;
             color: black;
         }
+        .total-row {
+            font-weight: bold;
+            background-color: #e9e9e9;
+        }
     </style>
 </head>
 <body>
@@ -89,23 +98,36 @@ $harga_barang = [3000, 2500, 5000, 6000, 4000];
         </div>
     </header>
 
-   <h2 style="text-align: center;">Daftar Pembelian</h2>
-<p style="text-align: center;">Daftar pembelian dibuat secara acak tiap kali halaman dimuat</p>
+    <h2 style="text-align: center;">Daftar Pembelian</h2>
+    <p style="text-align: center;">Daftar pembelian dibuat secara acak tiap kali halaman dimuat</p>
 
     <table>
         <tr>
             <th>Kode Barang</th>
             <th>Nama Barang</th>
-            <th>Harga (Rp)</th>
+            <th>Harga</th>
+            <th>Jumlah</th>
+            <th>Total</th>
         </tr>
+
         <?php
-        for ($i = 0; $i < count($kode_barang); $i++) {
+        for ($i = 0; $i < rand(1, $jumlah); $i++) {
+            $beli = rand(1, 10);
+            $id_barang = rand(0, $jumlah);
+            $total = $harga_barang[$id_barang] * $beli;
+            $grandtotal += $total;
+
             echo "<tr>";
-            echo "<td>{$kode_barang[$i]}</td>";
-            echo "<td>{$nama_barang[$i]}</td>";
-            echo "<td>" . number_format($harga_barang[$i], 0, ',', '.') . "</td>";
+            echo "<td>" . $kode_barang[$id_barang] . "</td>";
+            echo "<td>" . $nama_barang[$id_barang] . "</td>";
+            // tambahkan "Rp " sebelum number_format
+            echo "<td style='text-align:right;'>Rp " . number_format($harga_barang[$id_barang], 0, ',', '.') . "</td>";
+            echo "<td style='text-align:center;'>" . $beli . "</td>";
+            echo "<td style='text-align:right;'>Rp " . number_format($total, 0, ',', '.') . "</td>";
             echo "</tr>";
         }
+
+       
         ?>
     </table>
 </body>
