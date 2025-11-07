@@ -126,8 +126,10 @@ $grandtotal = 0; // ← harus pakai titik koma di akhir baris
             echo "<td style='text-align:right;'>Rp " . number_format($total, 0, ',', '.') . "</td>";
             echo "</tr>";
         }
-
-       
+echo "<tr class='total-row'>
+                <td colspan='4' style='text-align:right;'>Total Belanja:</td>
+                <td style='text-align:right;'>Rp " . number_format($grandtotal, 0, ',', '.') . "</td>
+              </tr>";
         ?>
     </table>
 </body>
