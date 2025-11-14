@@ -8,11 +8,16 @@ if (!isset($_SESSION['username'])) {
 }
 
 // Contoh data barang
-$kode_barang = ['K001', 'K002', 'K003', 'K004', 'K005'];
-$nama_barang = ['Teh Pucuk', 'Sukro', 'Sprite', 'Coca Cola', 'Chitose'];
-$harga_barang = [5000, 3500, 4000, 5500, 4000];
+$barang = [
+["K001", "Teh pucuk" , 3000],
+["K002", "sukrok" , 2500],
+["K003", "sprait" , 5000],
+["K004", "coca cola " , 6000],
+["K004", "chitose " , 4000],
 
-$jumlah = count($nama_barang) - 1;
+];
+
+$jumlah = count($barang) - 1;
 $beli = 0;
 $total = 0;
 $grandtotal = 0; // ← harus pakai titik koma di akhir baris
@@ -114,14 +119,18 @@ $grandtotal = 0; // ← harus pakai titik koma di akhir baris
         for ($i = 0; $i < rand(1, $jumlah); $i++) {
             $beli = rand(1, 10);
             $id_barang = rand(0, $jumlah);
-            $total = $harga_barang[$id_barang] * $beli;
+
+            $kode_barang = $barang[$id_barang][0];
+            $nama_barang = $barang[$id_barang][1];
+            $harga_barang = $barang[$id_barang][2];
+            $total = $harga_barang * $beli;
             $grandtotal += $total;
 
             echo "<tr>";
-            echo "<td>" . $kode_barang[$id_barang] . "</td>";
-            echo "<td>" . $nama_barang[$id_barang] . "</td>";
+            echo "<td>" . $kode_barang . "</td>";
+            echo "<td>" . $nama_barang . "</td>";
             // tambahkan "Rp " sebelum number_format
-            echo "<td style='text-align:right;'>Rp " . number_format($harga_barang[$id_barang], 0, ',', '.') . "</td>";
+            echo "<td style='text-align:right;'>Rp " . number_format($harga_barang, 0, ',', '.') . "</td>";
             echo "<td style='text-align:center;'>" . $beli . "</td>";
             echo "<td style='text-align:right;'>Rp " . number_format($total, 0, ',', '.') . "</td>";
             echo "</tr>";
